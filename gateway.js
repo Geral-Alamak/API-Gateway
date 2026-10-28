@@ -13,7 +13,18 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-app.use('/serviceA', createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
-app.use('/serviceB', createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
+// Do not add express.json() here, as it causes POST requests through the gateway to hang[cite: 5].
+
+app.use('/order-service', createProxyMiddleware({ 
+  target: 'http://localhost:3001', 
+  changeOrigin: true,
+  pathRewrite: { '^/order-service': '' } // Strips prefix so Service A receives '/orders'[cite: 5]
+}));
+
+app.use('/product-service', createProxyMiddleware({ 
+  target: 'http://localhost:3002', 
+  changeOrigin: true,
+  pathRewrite: { '^/product-service': '' } // Strips prefix so Service B receives '/products/... '[cite: 5]
+}));
 
 app.listen(port, () => console.log(`Gateway running on port ${port}`));
