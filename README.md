@@ -7,21 +7,7 @@ Programs needed:
 - express (from npm by "npm install")
 - http-proxy-middleware (from npm by "npm install")
 - express-rate-limit (from npm by "npm install")
+- amqplib  
   
-How to test this:  
-- run "npm install".
-- run "node serviceA.js".
-- Execute "http://localhost:3000/order-service/orders"  
-  {"productId": 1, "qty": 2}  
-  To test one service unavailable.  
-- run "node serviceB.js" on seperated terminal.
-- run "node gateway.js" on another serperated terminal.
-- Execute:  
-  - http://localhost:3000/order-service/orders  
-    {"productId": 1, "qty": 2}  
-    To test 2 service communicatng.  
-  - http://localhost:3000/order-service/orders  
-    {"productId": 1, "qty": 999}  
-    To test its function being unavailable (Not important)  
-  - *one of the endpoint and spam it atleast more than 5 times per minutes 
-    To test error 429.
+Cara tesnya:  
+Cukup "simple" saya yakin bapak pasti bisa, silahkan bertanya ke AI.
