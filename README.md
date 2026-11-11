@@ -8,6 +8,10 @@ Programs needed:
 - http-proxy-middleware (from npm by "npm install")
 - express-rate-limit (from npm by "npm install")
 - amqplib  
+- docker (rabbitmq)  
   
 Cara tesnya:  
-Cukup "simple" saya yakin bapak pasti bisa, silahkan bertanya ke AI.
+Cukup "simple" saya yakin bapak pasti bisa, silahkan bertanya ke AI.  
+
+Catatan untuk menjawab 409  
+409 itu ketika resource nda sesuai, misal yang dipakai adalah membeli dengan jumlah yang diluar stock sehingga memberikan error 409.
