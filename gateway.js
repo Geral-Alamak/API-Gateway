@@ -34,4 +34,9 @@ app.use('/product-service', createProxyMiddleware({
   pathRewrite: { '^/product-service': '' } // Strips prefix so Service B receives '/products/... '
 }));
 
+//Test
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', service: 'gateway' }); 
+});
+
 app.listen(port, () => console.log(`Gateway running on port ${port}`));

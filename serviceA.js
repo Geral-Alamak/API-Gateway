@@ -24,6 +24,10 @@ async function connectQueue() {
 function publishOrderCreated(order) {
   if (!channel) { console.warn('channel tidak tersedia, event TIDAK terkirim:', order.id); return false; }
   const body = Buffer.from(JSON.stringify({ type: 'order.created', data: order }));
+  
+  const msgId = `order-${order.id}`;
+  console.log(`[Order Service] Mengirim pesanan ke antrean dengan ID: ${msgId}`);
+
   return channel.publish('orders', '', body,
     { persistent: true, contentType: 'application/json', messageId: `order-${order.id}` });
 }
@@ -55,4 +59,10 @@ app.post('/orders', async (req, res) => {
 });
 
 connectQueue();
+
+//Test
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', service: 'order-service' }); 
+});
+
 app.listen(port, () => console.log(`Service A (Order) running on port ${port}`));

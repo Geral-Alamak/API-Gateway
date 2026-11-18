@@ -26,4 +26,9 @@ app.post('/products/:id/reserve', (req, res) => {
   res.json(p);
 });
 
+//Test
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', service: 'product-service' }); 
+});
+
 app.listen(port, () => console.log(`Service B (Product) running on port ${port}`));

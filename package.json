@@ -10,8 +10,15 @@
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
   },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4",
+    "concurrently": "^8.2.2"
+  },
   "scripts": {
     "swagger": "node swagger.js",
-    "start": "node gateway.js"
+    "start": "node gateway.js",
+    "start:all": "concurrently \"node gateway.js\" \"node serviceA.js\" \"node serviceB.js\"",
+    "test": "jest"
   }
 }
