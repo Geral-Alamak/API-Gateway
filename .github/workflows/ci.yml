@@ -37,4 +37,4 @@ jobs:
       run: sleep 5
 
     - name: Run Automated Tests
-      run: npm test
+      run: npm run test
