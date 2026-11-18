@@ -33,7 +33,7 @@ describe('Gateway Routing & Integration Tests', () => {
   it('should create an order successfully', async () => {
     const res = await request(GATEWAY_URL)
       .post('/order-service/orders')
-      .send({ productId: 1, qty: 1 });
+      .send({ productId: 1, qty: 10000 });
     
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty('id');
