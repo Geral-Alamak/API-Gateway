@@ -2,7 +2,7 @@ name: Microservices CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, Auto-Test ]
   pull_request:
     branches: [ main ]
 
