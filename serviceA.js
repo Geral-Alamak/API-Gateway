@@ -33,12 +33,16 @@ function publishOrderCreated(order) {
 }
 
 const orders = [];
+//Add for docker
+const PRODUCT_SERVICE_URL = process.env.PRODUCT_SERVICE_URL || 'http://localhost:3002';
 
 app.post('/orders', async (req, res) => {
   const { productId, qty } = req.body || {};
   
   try {
-    const resp = await fetch(`http://localhost:3002/products/${productId}/reserve`, {
+    //Change for docker
+    const resp = await fetch(`${PRODUCT_SERVICE_URL}/products/${productId}/reserve`, {
+    //const resp = await fetch(`http://localhost:3002/products/${productId}/reserve`, {    
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ qty }),

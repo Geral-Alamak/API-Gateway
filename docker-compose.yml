@@ -1,0 +1,72 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  product-service:
+    build: .
+    command: ["node", "serviceB.js"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3002/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  order-service:
+    build: .
+    command: ["node", "serviceA.js"]
+    restart: unless-stopped
+    environment:
+      PRODUCT_SERVICE_URL: http://product-service:3002
+      AMQP_URL: amqp://rabbitmq
+    depends_on:
+      product-service:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  notification-service:
+    build: .
+    command: ["node", "notification-service.js"]
+    restart: unless-stopped
+    environment:
+      AMQP_URL: amqp://rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  gateway:
+    build: .
+    command: ["node", "gateway.js"]
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PRODUCT_SERVICE_URL: http://product-service:3002
+      ORDER_SERVICE_URL: http://order-service:3001
+    depends_on:
+      product-service:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s

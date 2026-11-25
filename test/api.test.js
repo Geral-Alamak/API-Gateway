@@ -1,8 +1,8 @@
 const request = require('supertest');
 
 const GATEWAY_URL = 'http://localhost:3000';
-const ORDER_SERVICE_URL = 'http://localhost:3001';
-const PRODUCT_SERVICE_URL = 'http://localhost:3002';
+const ORDER_SERVICE_URL = 'http://localhost:3000/order-service';
+const PRODUCT_SERVICE_URL = 'http://localhost:3000/product-service';
 
 describe('System Health Checks', () => {
   it('Gateway should be UP', async () => {
